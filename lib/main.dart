@@ -1,5 +1,4 @@
-import 'package:blocs_app/presentation/blocs/01-simple-cubit/username.cubit.dart';
-import 'package:blocs_app/presentation/blocs/02-multiple-cubits/counter.cubit.dart';
+import 'package:blocs_app/presentation/blocs/blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:blocs_app/config/config.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +14,8 @@ class BlocsProviders extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => UsernameCubit()),
         BlocProvider(create: (context) => RouterSimpleCubic()),
-        BlocProvider(create: (context) => CounterCubit())
+        BlocProvider(create: (context) => CounterCubit()),
+        BlocProvider(create: (context) => ThemeCubit())
       ],
       child: const MyApp(),
     );
@@ -28,12 +28,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appRouter = context.watch<RouterSimpleCubic>().state;
+    final themeState = context.watch<ThemeCubit>().state;
 
     return MaterialApp.router(
       title: 'Flutter BLoC',
       debugShowCheckedModeBanner: false,
       routerConfig: appRouter,
-      theme: AppTheme(isDarkmode: false).getTheme(),
+      theme: AppTheme(isDarkmode: themeState.isDark).getTheme(),
     );
   }
 }
