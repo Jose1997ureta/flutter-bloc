@@ -1,4 +1,5 @@
 import 'package:blocs_app/presentation/blocs/01-simple-cubit/username.cubit.dart';
+import 'package:blocs_app/presentation/blocs/02-multiple-cubits/counter.cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:blocs_app/config/config.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +14,8 @@ class BlocsProviders extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => UsernameCubit()),
-        BlocProvider(create: (context) => RouterSimpleCubic())
+        BlocProvider(create: (context) => RouterSimpleCubic()),
+        BlocProvider(create: (context) => CounterCubit())
       ],
       child: const MyApp(),
     );
