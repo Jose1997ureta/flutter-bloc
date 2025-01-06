@@ -1,3 +1,4 @@
+import 'package:blocs_app/config/helpers/random_generator.dart';
 import 'package:blocs_app/presentation/blocs/blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,9 @@ class GuestsScreen extends StatelessWidget {
       body: const _TodoView(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          context.read<GuestsBloc>().adGuest(RandomGenerator.getRandomName());
+        },
       ),
     );
   }
@@ -51,11 +54,16 @@ class _TodoView extends StatelessWidget {
         /// Listado de personas a invitar
         Expanded(
           child: ListView.builder(
+            itemCount: guestBloc.state.totalFilterGuests,
             itemBuilder: (context, index) {
+              final el = guestBloc.state.filteredGuests[index];
+
               return SwitchListTile(
-                  title: const Text('Juan carlos'),
-                  value: true,
-                  onChanged: (value) {});
+                  title: Text(el.description),
+                  value: el.done,
+                  onChanged: (value) {
+                    guestBloc.toggleGuests(el.id);
+                  });
             },
           ),
         )
